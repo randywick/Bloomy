@@ -1,0 +1,29 @@
+{
+  "name": "bloomy",
+  "version": "0.0.1",
+  "description": "A bloom filter implementation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test-fnv": "mocha -R spec test/fnvSpec.js || true",
+    "test-base64": "mocha -R spec test/base64Spec.js || true",
+    "test-crc": "mocha -R spec test/crcSpec.js || true",
+    "test-pearson": "mocha -R spec test/pearson16Spec.js || true",
+    "test-jenkins": "mocha -R spec test/jenkinsSpec.js || true",
+    "test-murmur": "mocha -R spec test/murmurSpec.js || true",
+    "test-stackHash": "mocha -R spec test/stackHashSpec.js || true",
+    "test-bloomy": "mocha -R spec test/BloomySpec.js || true"
+  },
+  "keywords": [
+    "bloom"
+  ],
+  "author": "rw",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "chai-as-promised": "^5.1.0"
+  },
+  "dependencies": {
+    "bit-set": "^1.0.1"
+  }
+}
