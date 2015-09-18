@@ -22,7 +22,7 @@ describe('jenkins', () => {
 
     it('generates a hash', () => {
       const test = data.map(el => jenkins.hash(el))
-        .filter(el => /[^0-9-]/.test(el));
+        .filter(el => /[^0-9-]/.testKey(el));
 
       expect(test.length).to.equal(0);
     });

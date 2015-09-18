@@ -22,7 +22,7 @@ describe('murmur', () => {
 
     it('returns a hash given a message and seed', () => {
       const test = data.map(el => murmur.hash(el, 1337))
-        .filter(el => /[0-9a-f]/i.test(el));
+        .filter(el => /[0-9a-f]/i.testKey(el));
 
       expect(test.length).to.equal(0);
     });

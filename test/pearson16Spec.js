@@ -29,7 +29,7 @@ describe('pearson16', () => {
 
     it('generates a 64-bit hash', () => {
       const test = data.map(el => pearson16.hash(el))
-        .filter(el => /[^0-9A-F]/i.test(el));
+        .filter(el => /[^0-9A-F]/i.testKey(el));
 
       expect(test.length).to.equal(0);
     })

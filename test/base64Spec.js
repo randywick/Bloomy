@@ -34,7 +34,7 @@ describe('base64', () => {
 
     it('returns a base-64 encoded string', () => {
       const test = decoded.map(el => base64.encode(el))
-        .filter(val => /[^a-zA-Z0-9+/=]/.test(val));
+        .filter(val => /[^a-zA-Z0-9+/=]/.testKey(val));
 
       expect(test.length).to.equal(0);
     });
