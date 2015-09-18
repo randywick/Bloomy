@@ -5,9 +5,8 @@ A JavaScript Bloom Filter.
 ```
 const Bloomy = require('bloomy');
 const bloomy = new Bloomy();
-bloomy.setK(5);
-bloomy.test('foo');
-bloomy.set('bar');
+bloomy.set('foo');
+bloomy.test('bar');
 ```
 
 ## About
@@ -16,6 +15,82 @@ Bloomy uses FNV, Jenkins, Pearson16, and CRC hashes, while supplementing any
 additional K requirements satisfied by [derived FNV](http://willwhim.wpengine.com/2011/09/03/producing-n-hash-functions-by-hashing-only-once/)
 .  Included hashes will be optimized over time to ensure optimally
 normalized distribution and blazing fast execution time.
+
+##### Bloom Filter
+Bloomy is a fast and efficient multi-algorithm bloom filter implementation
+written in JavaScript for Node.js 4.0.0.  By default, Bloomy is optimized for
+a set containing 10,000 members and a target false positive probability of 0.01.
+
+Bloomy allows independent configuration of `K`, `M`, `N`, and `P`, by supplying
+an `opts` object or calling `Bloomy.prototype.setK()`, etc.  `K` and `M` may
+also be automatically configured by calling `Bloomy.prototype.optimize(n, p)`.
+Configuration is only possible before the first value is pushed, after which
+time properties become immutable and setters will throw an Error if attempted.
+
+##### Hash Functions
+In order to ensure the most effective normalized distribution of hash values
+without prior knowledge of collection data, a variety of hashing functions
+are employed.  Derivative hashing functions are lazy, slow and false-positive
+prone as any biases or inefficiencies are amplified, which can result in a
+linear loss of efficiency as demanded precision increases.
+
+That said, when K exceeds the number of available hashing functions, we do
+stack functions to meet demand.  This functionality is and will continue to be
+closely scrutinized for performance and effectiveness.
+
+###### Hash Function Distribution Data
+Coming soon
+
+###### Benchmarks
+An integration test is provided in `tests/BloomyIntegrationSpec.js`, which
+contains a variety of configuration options and a random data generator.  You
+can tweak the settings of this script to explore how different properties
+effect Bloomy's speed and performance.
+```
+1 of 10 chunks in 111ms (+0ms)
+2 of 10 chunks in 76ms (-35ms)
+3 of 10 chunks in 75ms (-1ms)
+4 of 10 chunks in 78ms (+3ms)
+5 of 10 chunks in 72ms (-6ms)
+6 of 10 chunks in 74ms (+2ms)
+7 of 10 chunks in 72ms (-2ms)
+8 of 10 chunks in 71ms (-1ms)
+9 of 10 chunks in 72ms (+1ms)
+10 of 10 chunks in 74ms (+2ms)
+52443 bits set
+---------
+  Actual Volume:  10000
+      Approx. N:  3714.973570487823
+       Actual N:  10000
+       Accepted:  9998
+       Rejected:  2
+              M:  220705
+              K:  7
+       Target P:  0.01
+False Positives:  2
+        FP Rate:  0.0002
+```
+
+#### API
+More Coming soon
+
+* `Bloomy() - constructor`
+* `Bloomy.optimizeK(m, n)` - calculates an optimized value for K
+* `Bloomy.optimizeM(n, p)` - calculates an optimized value for M
+* `Bloomy.prototype.getK()`
+* `Bloomy.prototype.setK(k)`
+* `Bloomy.prototype.getM()`
+* `Bloomy.prototype.setM(m)`
+* `Bloomy.prototype.getN()`
+* `Bloomy.prototype.setN(n)`
+* `Bloomy.prototype.getP()`
+* `Bloomy.prototype.setP(p)`
+* `Bloomy.prototype.optimize(n, p)`
+* `Bloomy.prototype.showHashes()`
+* `Bloomy.prototype.hash(key)`
+* `Bloomy.prototype.push(key)`
+* `Bloomy.prototype.testKey(key)`
+* `Bloomy.prototype.approximateN()`
 
 #### System Requirements
 Written for Node.JS 4.0.0; however, you are free to put this to use in the
@@ -35,10 +110,15 @@ files contain shortcut commands in `package.json`
 #### Planned Features
 * Node.JS Stream integration
 * Simple set comparisons: union, intersect, diff
-* Smooth automatic scaling of K and M
 * Re-write and replacement of BitSet - LevelDB?
 * Estimate cardinality
 * Lots of data geekage
+* Proper bit folding to reduce large numbers while maintaining distribution
+* Extract current integration test into a fully fledged configurable
+  benchmarking tool
+
+#### Issues
+* Cardinality approximation is completely useless in its current form
 
 #### Acknowledgements
 Particularly helpful information sources are included in comments in the

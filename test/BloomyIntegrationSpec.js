@@ -35,7 +35,7 @@ describe('Bloomy', function() {
       }
 
       const bloomy = new Bloomy();
-      const targetP = 0.001;
+      const targetP = 0.01;
       const volume = 10000;
       bloomy.optimize(volume, targetP);
 
@@ -44,14 +44,14 @@ describe('Bloomy', function() {
       let rejected = 0;
 
       for (let i = 0; i < volume; i++) {
-        if (i % 1000 === 0) {
+        if ((i + 1) % 1000 === 0) {
           const elapsed = Date.now() - ts;
           let change = prev? elapsed - prev : 0;
           if (change >= 0) change = '+' + change;
           prev = elapsed;
           ts = Date.now();
 
-          console.log(`${i/1000} of ${Math.floor(volume/1000)} chunks in ${elapsed}ms (${change}ms)`);
+          console.log(`${(i+1)/1000} of ${Math.floor(volume/1000)} chunks in ${elapsed}ms (${change}ms)`);
         }
         const key = getKey();
         if (!!bloomy.testKey(key)) rejected++;

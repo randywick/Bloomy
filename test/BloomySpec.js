@@ -69,7 +69,7 @@ describe ('Bloomy.prototype', function() {
   });
 
   it('given a testKey value, returns all _hashes', () => {
-    expect(bloomy.getHashes('foo')).to.be.an.instanceof(Array);
+    expect(bloomy.hash('foo')).to.be.an.instanceof(Array);
   });
 
   it('sets all bits for a key', () => {
