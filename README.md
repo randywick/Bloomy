@@ -2,7 +2,7 @@
 A JavaScript Bloom Filter.
 
 ## Use
-```
+```javascript
 const Bloomy = require('bloomy');
 const bloomy = new Bloomy();
 bloomy.set('foo');
@@ -74,7 +74,7 @@ False Positives:  2
 #### API
 More Coming soon
 
-* `Bloomy() - constructor`
+* `Bloomy()` - constructor
 * `Bloomy.optimizeK(m, n)` - calculates an optimized value for K
 * `Bloomy.optimizeM(n, p)` - calculates an optimized value for M
 * `Bloomy.prototype.getK()`
@@ -105,16 +105,16 @@ from the interaction stream, but observation stream events do not affect
 the bit vector.
  
 ###### Union
-```
+```javascript
 const bloomy = new Bloomy();
-const interStream = bloomy.createUnionStream();
+const unionStream = bloomy.createUnionStream();
 ```
 A union stream is a transform stream that blocks all data that **are
 represented** in the bit vector.  Additionally, interaction stream events
 containing novel data are forwarded to any union streams.
  
 ###### Intersect
-```
+```javascript
 const bloomy = new Bloomy();
 const interStream = bloomy.createIntersectStream();
 ```
@@ -123,7 +123,7 @@ represented** in the bit vector.  Intersect streams do not maintain independent
 bit vectors, so interaction stream events are not repeated.
 
 ###### Diff
-```
+```javascript
 const bloomy = new Bloomy();
 const diffStream = bloomy.createIntersectStream();
 ```
