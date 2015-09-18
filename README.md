@@ -74,7 +74,7 @@ False Positives:  2
 #### API
 More Coming soon
 
-* `Bloomy()` - constructor
+* `new Bloomy()`
 * `Bloomy.optimizeK(m, n)` - calculates an optimized value for K
 * `Bloomy.optimizeM(n, p)` - calculates an optimized value for M
 * `Bloomy.prototype.getK()`
@@ -91,6 +91,9 @@ More Coming soon
 * `Bloomy.prototype.push(key)`
 * `Bloomy.prototype.testKey(key)`
 * `Bloomy.prototype.approximateN()`
+* `Bloomy.prototype.createUnionStream()`
+* `Bloomy.prototype.createIntersectStream()`
+* `Bloomy.prototype.createDiffStream()`
 
 #### Interaction Stream
 `Bloomy` instances inherit from stream.Transform.  Any data written or piped
@@ -125,7 +128,7 @@ bit vectors, so interaction stream events are not repeated.
 ###### Diff
 ```javascript
 const bloomy = new Bloomy();
-const diffStream = bloomy.createIntersectStream();
+const diffStream = bloomy.createDiffStream();
 ```
 A diff stream is a transform stream that blocks all data **not 
 represented** in the bit vector.  Diff streams do not maintain independent 
