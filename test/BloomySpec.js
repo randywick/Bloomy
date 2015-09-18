@@ -34,6 +34,16 @@ describe ('Bloomy.prototype', function() {
     expect(bloomy).to.be.an.instanceof(Bloomy);
   });
 
+  it('has getters and setters for K, M, N, and P', () => {
+    const values = {k: 5, m: 100000, n: 10000, p: 0.05};
+    ['k', 'm', 'n', 'p'].forEach(val => {
+      const getter = bloomy[`get${val.toUpperCase()}`]();
+      const setter = bloomy[`set${val.toUpperCase()}`](values[val]);
+      expect(getter).to.be.a('number');
+      expect(setter).to.be.an.instanceof(Bloomy);
+    });
+  });
+
   it('returns K - the number of hash functions used', () => {
     expect(bloomy.getK()).to.be.a('number');
   });
@@ -64,9 +74,9 @@ describe ('Bloomy.prototype', function() {
 
   it('sets all bits for a key', () => {
     const tests = [
-      bloomy.set('foo'),
-      bloomy.set('bar'),
-      bloomy.set('baz')
+      bloomy.push('foo'),
+      bloomy.push('bar'),
+      bloomy.push('baz')
     ];
 
     const completed = tests.filter(el => !el);

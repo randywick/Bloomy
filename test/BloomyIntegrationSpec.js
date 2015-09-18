@@ -17,7 +17,7 @@ describe('Bloomy', function() {
       const uc = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
       const alphabet = lc;
       const getKey = () => {
-        let len = 4;
+        let len = 8;
         let id = '';
         for (let i = 0; i < len; i++) {
           let pos = Math.floor(Math.random() * alphabet.length);
@@ -35,8 +35,8 @@ describe('Bloomy', function() {
       }
 
       const bloomy = new Bloomy();
-      const targetP = 0.01;
-      const volume = 100000;
+      const targetP = 0.001;
+      const volume = 10000;
       bloomy.optimize(volume, targetP);
 
       let ts = Date.now();
@@ -56,7 +56,7 @@ describe('Bloomy', function() {
         const key = getKey();
         if (!!bloomy.testKey(key)) rejected++;
         cache(key);
-        bloomy.set(key);
+        bloomy.push(key);
       }
 
       const approxN = bloomy.approximateN();
