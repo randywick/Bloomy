@@ -92,6 +92,45 @@ More Coming soon
 * `Bloomy.prototype.testKey(key)`
 * `Bloomy.prototype.approximateN()`
 
+#### Interaction Stream
+`Bloomy` instances inherit from stream.Transform.  Any data written or piped
+ to the `Bloomy` instance will be added to the bit vector before being pushed
+ through.
+ 
+ 
+#### Observation Streams
+Observation streams accept data and compare them to the bit vector before
+returning or discarding the data.  Observation streams may be forwarded events
+from the interaction stream, but observation stream events do not affect
+the bit vector.
+ 
+###### Union
+```
+const bloomy = new Bloomy();
+const interStream = bloomy.createUnionStream();
+```
+A union stream is a transform stream that blocks all data that **are
+represented** in the bit vector.  Additionally, interaction stream events
+containing novel data are forwarded to any union streams.
+ 
+###### Intersect
+```
+const bloomy = new Bloomy();
+const interStream = bloomy.createIntersectStream();
+```
+An intersect stream is a transform stream that blocks all data that **are 
+represented** in the bit vector.  Intersect streams do not maintain independent 
+bit vectors, so interaction stream events are not repeated.
+
+###### Diff
+```
+const bloomy = new Bloomy();
+const diffStream = bloomy.createIntersectStream();
+```
+A diff stream is a transform stream that blocks all data **not 
+represented** in the bit vector.  Diff streams do not maintain independent 
+bit vectors, so interaction stream events are not repeated.
+
 #### System Requirements
 Written for Node.JS 4.0.0; however, you are free to put this to use in the
 browser.  Some ES6 language features may cause problems in browsers; 
@@ -108,8 +147,6 @@ syntax and run by [mocha](https://www.npmjs.com/package/mocha).  All test
 files contain shortcut commands in `package.json`
 
 #### Planned Features
-* Node.JS Stream integration
-* Simple set comparisons: union, intersect, diff
 * Re-write and replacement of BitSet - LevelDB?
 * Estimate cardinality
 * Lots of data geekage

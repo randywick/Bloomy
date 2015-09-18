@@ -74,9 +74,9 @@ describe ('Bloomy.prototype', function() {
 
   it('sets all bits for a key', () => {
     const tests = [
-      bloomy.push('foo'),
-      bloomy.push('bar'),
-      bloomy.push('baz')
+      bloomy.add('foo'),
+      bloomy.add('bar'),
+      bloomy.add('baz')
     ];
 
     const completed = tests.filter(el => !el);
@@ -91,6 +91,29 @@ describe ('Bloomy.prototype', function() {
   it('prevents modification of K and M after first observation', () => {
     expect(() => bloomy.setK(1)).to.throw(Error);
     expect(() => bloomy.setM(1000)).to.throw(Error);
+  });
+
+  it('is a transform stream', () => {
+    expect(bloomy).to.have.a.property('writable');
+    expect(bloomy).to.have.a.property('readable');
+  });
+
+  it('provides an intersect stream', () => {
+    const stream = bloomy.createIntersectStream();
+    expect(stream).to.have.a.property('writable');
+    expect(stream).to.have.a.property('readable');
+  });
+
+  it('provides a diff stream', () => {
+    const stream = bloomy.createDiffStream();
+    expect(stream).to.have.a.property('writable');
+    expect(stream).to.have.a.property('readable');
+  });
+
+  it('provides a diff stream', () => {
+    const stream = bloomy.createUnionStream();
+    expect(stream).to.have.a.property('writable');
+    expect(stream).to.have.a.property('readable');
   });
 
 });

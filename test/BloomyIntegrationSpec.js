@@ -56,7 +56,7 @@ describe('Bloomy', function() {
         const key = getKey();
         if (!!bloomy.testKey(key)) rejected++;
         cache(key);
-        bloomy.push(key);
+        bloomy.add(key);
       }
 
       const approxN = bloomy.approximateN();
